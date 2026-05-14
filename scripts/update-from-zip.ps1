@@ -136,8 +136,7 @@ if ([string]::IsNullOrWhiteSpace($status)) {
 Write-Host ""
 $run = Read-Host "Start the app now? (Y/n)"
 if ($run -ne 'n' -and $run -ne 'N') {
-    # Use Start-Process so the script returns immediately
-    Start-Process -FilePath 'npm' -ArgumentList 'start' -NoNewWindow
+    Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', 'npm', 'start' -WorkingDirectory $projectRoot
     Write-Host "  Launched. Look for the tray icon in your taskbar." -ForegroundColor Green
 }
 
