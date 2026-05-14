@@ -130,10 +130,11 @@ if ([string]::IsNullOrWhiteSpace($status)) {
     powershell -ExecutionPolicy Bypass -File .\scripts\push-to-github.ps1
 }
 
-# --- Step 7: Always start the app ---
+# --- Step 7: Always start the app (silently, no console window) ---
 Write-Host ""
 Write-Host "Starting the app..." -ForegroundColor Cyan
-Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', 'npm', 'start' -WorkingDirectory $projectRoot
+$launcher = Join-Path $projectRoot 'scripts\start-quotes-hidden.vbs'
+Start-Process -FilePath 'wscript.exe' -ArgumentList "`"$launcher`""
 Write-Host "  Launched. Look for the tray icon in your taskbar." -ForegroundColor Green
 
 Write-Host ""

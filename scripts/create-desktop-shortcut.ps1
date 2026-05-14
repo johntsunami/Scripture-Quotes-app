@@ -1,17 +1,19 @@
 ﻿$projectRoot = 'C:\Users\jcnur\Code\quotes'
 $desktop     = [Environment]::GetFolderPath('Desktop')
 $shortcut    = Join-Path $desktop 'Scripture Quotes.lnk'
-$target      = Join-Path $projectRoot 'scripts\start-quotes.cmd'
+$target      = 'C:\Windows\System32\wscript.exe'
+$launcher    = Join-Path $projectRoot 'scripts\start-quotes-hidden.vbs'
 $icon        = Join-Path $projectRoot 'assets\tray-icon.png'
 
-if (-not (Test-Path $target)) {
-    Write-Host "ERROR: launcher not found at $target" -ForegroundColor Red
+if (-not (Test-Path $launcher)) {
+    Write-Host "ERROR: launcher not found at $launcher" -ForegroundColor Red
     exit 1
 }
 
 $shell = New-Object -ComObject WScript.Shell
 $lnk = $shell.CreateShortcut($shortcut)
 $lnk.TargetPath = $target
+$lnk.Arguments = "`"$launcher`""
 $lnk.WorkingDirectory = $projectRoot
 $lnk.WindowStyle = 7
 $lnk.Description = 'Launch Scripture Quotes'
