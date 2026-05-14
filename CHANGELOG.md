@@ -5,6 +5,21 @@ All notable changes to this project are documented here.
 The format is loosely based on [Keep a Changelog](https://keepachangelog.com/),
 and the project follows semantic versioning where practical.
 
+## [0.7.2] — 2026-05-13
+
+### Added
+- **`scripts/update-from-zip.ps1`** — smart update workflow that replaces
+  the old wipe-and-extract flow. Stops the running app, extracts to a temp
+  folder, mirrors source files into the project while preserving `.git/`,
+  `data/`, and `node_modules/`. Then runs setup, shows the Git diff, and
+  offers to push and start the app.
+- **`.gitattributes`** — silences "LF will be replaced by CRLF" warnings
+  by telling Git to normalize line endings consistently across platforms.
+
+### Removed
+- Dead `src/main/quote-store.js` file (replaced by `deck-store.js` in v0.6.0
+  but was still present in the install layout).
+
 ## [0.7.1] — 2026-05-13
 
 ### Added

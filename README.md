@@ -24,6 +24,17 @@ npm start
 
 To pull future updates:
 
+If you have a new `quotes.zip` from a fresh build, the smart update script
+handles everything — stops the running app, extracts files, preserves your
+`data/` and `.git/`, runs setup, and offers to commit + push:
+
+```powershell
+cd C:\Users\$env:USERNAME\Code\Scripture-Quotes-app
+powershell -ExecutionPolicy Bypass -File .\scripts\update-from-zip.ps1
+```
+
+If you'd rather pull from GitHub directly:
+
 ```powershell
 cd C:\Users\$env:USERNAME\Code\Scripture-Quotes-app
 git pull

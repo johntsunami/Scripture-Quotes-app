@@ -1,0 +1,17 @@
+# Normalize text files to LF in the repo, check out as native on Windows.
+# This silences the "LF will be replaced by CRLF" warnings.
+* text=auto eol=lf
+
+# Force CRLF for Windows-specific files
+*.ps1   text eol=crlf
+*.cmd   text eol=crlf
+*.bat   text eol=crlf
+
+# Binary files — never touch line endings
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.zip   binary
+*.exe   binary
