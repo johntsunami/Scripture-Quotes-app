@@ -36,21 +36,20 @@
    * so the dark outline (Layer A) is listed FIRST and ends up on top. */
   --popup-size: 30pt;
   --popup-shadow:
-    /* Layer A: tight dark outline (8-way for crispness) */
-    -1px -1px 0 rgba(0,0,0,0.85),
-     1px -1px 0 rgba(0,0,0,0.85),
-    -1px  1px 0 rgba(0,0,0,0.85),
-     1px  1px 0 rgba(0,0,0,0.85),
-     0   -1px 0 rgba(0,0,0,0.85),
-     0    1px 0 rgba(0,0,0,0.85),
-    -1px  0   0 rgba(0,0,0,0.85),
-     1px  0   0 rgba(0,0,0,0.85),
-    /* Layer B: soft white glow for dark-background separation */
-    0 0 8px  rgba(255,255,255,0.75),
-    0 0 16px rgba(255,255,255,0.55),
-    0 0 28px rgba(255,255,255,0.30),
+    /* Layer A: tight dark outline (8-way) -- bumped to full opacity for crispness */
+    -1px -1px 0 rgba(0,0,0,1),
+     1px -1px 0 rgba(0,0,0,1),
+    -1px  1px 0 rgba(0,0,0,1),
+     1px  1px 0 rgba(0,0,0,1),
+     0   -1px 0 rgba(0,0,0,1),
+     0    1px 0 rgba(0,0,0,1),
+    -1px  0   0 rgba(0,0,0,1),
+     1px  0   0 rgba(0,0,0,1),
+    /* Layer B: tighter white glow for separation without haze */
+    0 0 4px  rgba(255,255,255,0.9),
+    0 0 8px  rgba(255,255,255,0.5),
     /* Layer C: subtle drop shadow for grounding */
-    0 2px 4px rgba(0,0,0,0.45);
+    0 2px 3px rgba(0,0,0,0.6);
 
   /* Motion */
   --fade-duration: 12s;  /* the slow gentle reveal — 3x slower than v1 */

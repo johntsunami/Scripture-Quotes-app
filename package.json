@@ -1,6 +1,6 @@
 {
   "name": "quotes",
-  "version": "0.9.7",
+  "version": "0.10.0",
   "description": "Transparent always-on-top scripture and inspirational quote popups.",
   "main": "src/main/main.js",
   "author": "johntsunami",

@@ -52,6 +52,8 @@ const els = {
   fontColorReset: document.getElementById('font-color-reset'),
   revealDuration: document.getElementById('reveal-duration'),
   revealDurationVal: document.getElementById('reveal-duration-val'),
+  revealDelay:    document.getElementById('reveal-delay'),
+  revealDelayVal: document.getElementById('reveal-delay-val'),
   revealModeRadios: document.querySelectorAll('input[name="reveal-mode"]'),
   wordSpeed:      document.getElementById('word-speed'),
   wordSpeedVal:   document.getElementById('word-speed-val'),
@@ -90,6 +92,7 @@ function updatePreview({ replay = false } = {}) {
   const size = parseInt(els.fontSize.value, 10);
   const op   = parseInt(els.opacity.value, 10);
   const dur  = parseInt(els.revealDuration.value, 10);  // seconds
+  const delay = parseInt(els.revealDelay.value, 10);    // seconds
   const wordSpeedMs = parseInt(els.wordSpeed.value, 10);
   const color = els.fontColor.value;
   const isDefaultColor = color.toLowerCase() === '#3d342b';
@@ -98,6 +101,7 @@ function updatePreview({ replay = false } = {}) {
   els.fontSizeVal.textContent       = `${size}pt`;
   els.opacityVal.textContent        = `${op}%`;
   els.revealDurationVal.textContent = `${dur}s`;
+  els.revealDelayVal.textContent    = `${delay}s`;
   els.fontColorVal.textContent      = isDefaultColor ? 'Default (brown)' : color.toUpperCase();
   els.wordSpeedVal.textContent      = `${(wordSpeedMs / 1000).toFixed(1)}s per word`;
 
@@ -202,6 +206,7 @@ els.fontSize.addEventListener('input',       () => updatePreview());
 els.opacity.addEventListener('input',        () => updatePreview());
 els.fontColor.addEventListener('input',      () => updatePreview());
 els.revealDuration.addEventListener('input', () => updatePreview());
+els.revealDelay.addEventListener('input', () => updatePreview());
 els.wordSpeed.addEventListener('input',      () => updatePreview());
 els.revealModeRadios.forEach(r => r.addEventListener('change', () => {
   updateWordSpeedRowVisibility();
@@ -239,6 +244,7 @@ async function loadSettings() {
   els.opacity.value        = s.opacity        ?? 100;
   els.fontColor.value      = s.fontColor      || '#3D342B';
   els.revealDuration.value = s.revealDurationMs ? Math.round(s.revealDurationMs / 1000) : 7;
+  els.revealDelay.value    = s.revealDelayMs    != null ? Math.round(s.revealDelayMs    / 1000) : 1;
   els.wordSpeed.value      = s.wordSpeedMs    ?? 1200;
   const mode = s.revealMode || 'all';
   document.querySelector(`input[name="reveal-mode"][value="${mode}"]`).checked = true;
@@ -339,6 +345,7 @@ els.saveBtn.addEventListener('click', async () => {
     opacity:  parseInt(els.opacity.value, 10),
     fontColor: els.fontColor.value,
     revealDurationMs: parseInt(els.revealDuration.value, 10) * 1000,
+    revealDelayMs:    parseInt(els.revealDelay.value, 10) * 1000,
     revealMode: document.querySelector('input[name="reveal-mode"]:checked')?.value || 'all',
     wordSpeedMs: parseInt(els.wordSpeed.value, 10),
     autoStart:    els.autoStart.checked,

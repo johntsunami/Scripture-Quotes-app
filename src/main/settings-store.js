@@ -14,6 +14,7 @@ const DEFAULTS = {
   opacity:      100,
   revealMode:        'all',          // 'all' | 'word'
   revealDurationMs:  7000,
+  revealDelayMs:     1000,           // quiet moment before the reveal animation starts
   wordSpeedMs:       1200,           // per-word fade time when revealMode = 'word'
   position:          'center',       // top-left | top-center | top-right | center | bottom-left | bottom-center | bottom-right
   autoStart:         true,           // launch with Windows by default; user can disable in Settings

@@ -39,6 +39,7 @@ function render(payload) {
     opacity          = 100,
     revealMode       = 'all',    // 'all' | 'word'
     revealDurationMs = 7000,    // total fade duration for the verse (all-at-once mode, or total budget for word mode)
+    revealDelayMs    = 1000,    // quiet pause after popup appears, before text starts fading in
     wordSpeedMs      = 1200,     // per-word fade time when revealMode = 'word'
   } = payload;
 
@@ -54,15 +55,18 @@ function render(payload) {
   }
   document.documentElement.style.setProperty('--fade-duration', `${revealDurationMs}ms`);
 
-  // ----- Source stagger delay -----
-  const sourceDelayMs = revealMode === 'word'
+  // ----- Delay before the verse starts fading in -----
+  textEl.style.animationDelay = `${revealDelayMs}ms`;
+
+  // ----- Source stagger delay (relative to the start of the verse reveal) -----
+  const sourceStaggerMs = revealMode === 'word'
     ? Math.round(revealDurationMs * 0.92)
     : Math.round(revealDurationMs * 0.22);
-  sourceEl.style.animationDelay = `${sourceDelayMs}ms`;
+  sourceEl.style.animationDelay = `${revealDelayMs + sourceStaggerMs}ms`;
 
   // ----- Render the text in the chosen mode -----
   if (revealMode === 'word' && text) {
-    renderWordByWord(text, revealDurationMs, wordSpeedMs);
+    renderWordByWord(text, revealDurationMs, wordSpeedMs, revealDelayMs);
   } else {
     textEl.classList.remove('quote__text--per-word');
     textEl.style.removeProperty('--word-duration');
@@ -81,7 +85,7 @@ function render(payload) {
 // Stagger between word starts = (revealDurationMs - wordSpeedMs) / (N-1).
 // If the user sets a wordSpeedMs longer than the total budget allows, the
 // words will overlap heavily but everything still completes in time.
-function renderWordByWord(text, revealDurationMs, wordSpeedMs) {
+function renderWordByWord(text, revealDurationMs, wordSpeedMs, revealDelayMs = 0) {
   textEl.classList.add('quote__text--per-word');
   textEl.innerHTML = '';
 
@@ -105,7 +109,7 @@ function renderWordByWord(text, revealDurationMs, wordSpeedMs) {
     const span = document.createElement('span');
     span.className = 'word';
     span.textContent = tok;
-    span.style.animationDelay = `${wordIndex * stepMs}ms`;
+    span.style.animationDelay = `${revealDelayMs + (wordIndex * stepMs)}ms`;
     textEl.appendChild(span);
     wordIndex++;
   });

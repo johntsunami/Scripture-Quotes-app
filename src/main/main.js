@@ -370,6 +370,7 @@ ipcMain.on('quote:ready', (evt) => {
     opacity:          s.opacity,
     revealMode:       s.revealMode,
     revealDurationMs: s.revealDurationMs,
+    revealDelayMs:    s.revealDelayMs,
     wordSpeedMs:      s.wordSpeedMs,
   });
 });
@@ -407,6 +408,7 @@ ipcMain.handle('settings:save', (_evt, payload) => {
     opacity:          payload.opacity,
     revealMode:       payload.revealMode,
     revealDurationMs: payload.revealDurationMs,
+    revealDelayMs:    payload.revealDelayMs,
     wordSpeedMs:      payload.wordSpeedMs,
     position:         payload.position,
     autoStart:        payload.autoStart,
