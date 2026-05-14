@@ -9,7 +9,7 @@ const DEFAULTS = {
   quietEnabled: true,                // quiet hours on by default
   quietFrom:    '22:00',
   quietTo:      '07:00',
-  fontSize:     30,
+  fontSize:     60,
   fontColor:    '#3D342B',
   opacity:      100,
   revealMode:        'all',          // 'all' | 'word'
