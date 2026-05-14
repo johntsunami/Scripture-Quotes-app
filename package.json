@@ -1,0 +1,21 @@
+{
+  "name": "quotes",
+  "version": "0.7.1",
+  "description": "Transparent always-on-top scripture and inspirational quote popups.",
+  "main": "src/main/main.js",
+  "author": "johntsunami",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "popup-preview": "electron . --preview-popup"
+  },
+  "devDependencies": {
+    "electron": "^32.0.0"
+  },
+  "dependencies": {}
+}

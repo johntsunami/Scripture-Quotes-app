@@ -1,0 +1,45 @@
+<!-- Illuminated-manuscript Q for the Quotes tray icon.
+     32x32 base; renders crisply on Windows tray (typically 16x16 logical / 32x32 hi-DPI).
+     Cream fill (#F8F6F2), gold serif Q (#B8860B), deep brown outline (#3D342B).
+     The flourish is the descender curl off the bottom-right of the Q.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Rounded cream tile background, like a manuscript initial cell -->
+  <rect x="1" y="1" width="30" height="30" rx="5" ry="5"
+        fill="#F8F6F2" stroke="#3D342B" stroke-width="1.2"/>
+
+  <!-- Inner gold border, the manuscript-illumination touch -->
+  <rect x="3" y="3" width="26" height="26" rx="3.5" ry="3.5"
+        fill="none" stroke="#B8860B" stroke-width="0.6" opacity="0.55"/>
+
+  <!-- The Q itself: a serif capital with a flourish descender.
+       Drawn as a path rather than text so it renders identically without
+       requiring the Cormorant Garamond font to be installed at icon-bake time. -->
+  <g fill="#B8860B" stroke="#3D342B" stroke-width="0.5" stroke-linejoin="round">
+    <!-- Bowl: outer ring of the Q -->
+    <path d="
+      M 16 6.5
+      C 11.2 6.5, 7.5 10.5, 7.5 16
+      C 7.5 21.5, 11.2 25.5, 16 25.5
+      C 20.8 25.5, 24.5 21.5, 24.5 16
+      C 24.5 10.5, 20.8 6.5, 16 6.5
+      Z
+      M 16 9.2
+      C 19.4 9.2, 22 12.2, 22 16
+      C 22 19.8, 19.4 22.8, 16 22.8
+      C 12.6 22.8, 10 19.8, 10 16
+      C 10 12.2, 12.6 9.2, 16 9.2
+      Z
+    " fill-rule="evenodd"/>
+
+    <!-- Flourish descender (the signature curl of a serif Q) -->
+    <path d="
+      M 17.5 19
+      L 21.5 24.5
+      C 22 25.2, 22.8 25.6, 23.6 25.3
+      C 24.4 25, 24.7 24.2, 24.4 23.4
+      L 22.3 20.2
+      Z
+    "/>
+  </g>
+</svg>

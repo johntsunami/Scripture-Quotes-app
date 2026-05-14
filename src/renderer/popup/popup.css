@@ -1,0 +1,206 @@
+/*
+ * The window itself is transparent + frameless (set in main.js).
+ * Everything you see is just text and three subtle buttons floating on
+ * whatever is behind the window.
+ */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;        /* critical — do not change */
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+/* Inner content is normal (clickable, hoverable). Window-dragging is
+   disabled for now — the popup is centered and always-on-top; if the user
+   wants to move it that's a future feature with a dedicated drag handle.
+   Critical: setting -webkit-app-region anywhere on the visible content
+   blocks :hover events on that region, which is why we don't use it. */
+.quote {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6vh 8vw;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* The body shrink-wraps the text so the close X can hug the text block.
+   Without this, position:absolute on the close button would anchor to the
+   entire popup window instead of just the actual quote text area. */
+.quote__body {
+  position: relative;
+  display: inline-block;
+}
+
+.quote__text,
+.quote__source {
+  font-family: var(--font-display);
+  color: var(--text-brown-deep);
+  text-shadow: var(--popup-shadow);
+  margin: 0;
+  opacity: 0;
+  /* the slow gentle reveal */
+  animation: fadeIn var(--fade-duration) var(--fade-easing) forwards;
+}
+
+.quote__text {
+  font-size: var(--popup-size);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.005em;
+  max-width: 38ch;
+}
+
+/* Per-word reveal mode. When .quote__text has --per-word, JS replaces its
+   children with a series of word spans, each with an inline animation-delay.
+   The parent's own fade is suppressed (its opacity is 1 immediately) so that
+   only the words animate. */
+.quote__text--per-word {
+  animation: none;
+  opacity: 1;
+}
+.quote__text--per-word .word {
+  display: inline-block;
+  opacity: 0;
+  /* each word gets the same per-word duration; delay is set inline per word */
+  animation: fadeInWord var(--word-duration, 1.2s) var(--fade-easing) forwards;
+  /* preserve the space character between words */
+}
+.quote__text--per-word .word::after {
+  content: ' ';
+  /* The space sits inside the span so it inherits the fade. */
+}
+
+@keyframes fadeInWord {
+  from { opacity: 0; transform: translateY(4px); filter: blur(1.5px); }
+  to   { opacity: 1; transform: translateY(0);   filter: blur(0);   }
+}
+
+.quote__source {
+  font-size: calc(var(--popup-size) * 0.55);
+  font-style: italic;
+  font-weight: 400;
+  margin-top: 1.4em;
+  opacity: 0;
+  /* source fades in after the text. JS sets inline animation-delay based on
+     the user's chosen reveal-duration; this CSS fallback covers the standalone
+     preview case where no JS payload is available. */
+  animation: fadeIn var(--fade-duration) var(--fade-easing) 2.7s forwards;
+}
+
+/* Actions: quiet by default, lift on hover of the popup area.
+   Positioned at the bottom-center of the popup window. Without explicit
+   left/transform, the buttons would render off-screen since the flex
+   centering doesn't apply to absolutely-positioned children. */
+.quote__actions {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 14px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 5;
+  pointer-events: none;  /* don't block hover on the quote until visible */
+}
+
+.quote:hover .quote__actions,
+.quote__actions:focus-within {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-brown);
+  background: rgba(248, 246, 242, 0.82);
+  border: 1px solid rgba(90, 78, 64, 0.18);
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.btn:hover  { background: rgba(248, 246, 242, 0.96); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+
+.btn--gold { border-color: rgba(184, 134, 11, 0.55); color: var(--gold); }
+.btn--gold:hover { background: rgba(184, 134, 11, 0.12); border-color: var(--gold); }
+.btn--gold.is-active { background: var(--gold); color: var(--bg-warm); border-color: var(--gold); }
+.btn--gold.is-active .btn__icon { /* star fills in when favorited */ }
+
+.btn--quiet { color: var(--text-brown-dim); border-color: rgba(90, 78, 64, 0.10); }
+.btn--quiet:hover { color: #8b3a3a; border-color: rgba(139, 58, 58, 0.45); }
+
+.btn__icon { margin-right: 6px; }
+
+/* Close X -- hugs the top-right of the text block, hidden until hover.
+   Anchored to .quote__body (not the window) so it sits right at the text edge
+   instead of in the far window corner. */
+.quote__close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  color: var(--text-brown-deep);
+  cursor: pointer;
+  opacity: 0;                       /* hidden by default */
+  transition: opacity 0.35s ease, background 0.2s ease, transform 0.15s ease;
+  filter:
+    drop-shadow(0 0 2px rgba(255,255,255,0.9))
+    drop-shadow(0 0 4px rgba(255,255,255,0.7))
+    drop-shadow(0 1px 1px rgba(0,0,0,0.6));
+}
+
+/* Show only when the user hovers anywhere on the popup. */
+.quote:hover .quote__close,
+.quote__close:focus-visible {
+  opacity: 0.7;
+}
+.quote__close:hover {
+  opacity: 1 !important;
+  background: rgba(248, 246, 242, 0.85);
+  transform: scale(1.1);
+}
+.quote__close:active { transform: scale(0.92); }
+
+/* The fade. Easing is deliberately gentle — no sharp arrivals. */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0);   filter: blur(0);  }
+}
+
+/* When dismissing, fade out symmetrically before the window closes. */
+.quote.is-leaving .quote__text,
+.quote.is-leaving .quote__source {
+  animation: fadeOut 2.4s var(--fade-easing) forwards;
+}
+.quote.is-leaving .quote__actions { opacity: 0; }
+.quote.is-leaving .quote__close   { opacity: 0; transition: opacity 1s ease; }
+
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateY(-4px); filter: blur(1px); }
+}

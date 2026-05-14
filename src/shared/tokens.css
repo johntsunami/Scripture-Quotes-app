@@ -1,0 +1,58 @@
+/*
+ * Design tokens for Quotes.
+ * Matches Task Assistant: warm off-white background, muted brown text, gold accents.
+ * Imported by both the popup and the settings window.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+:root {
+  /* Palette */
+  --bg-warm:        #F8F6F2;
+  --text-brown:     #5A4E40;
+  --text-brown-dim: #8A7E70;
+  --text-brown-deep:#3D342B;   /* used by the popup quote text -- needs more bite */
+  --gold:           #B8860B;
+  --gold-soft:      #D4A82E;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --font-body:    'EB Garamond', Georgia, serif;
+
+  /* Popup-specific.
+   *
+   * Readability strategy (revised after v1 was too ghosty):
+   *   Layer A -- TIGHT DARK OUTLINE.   1px-radius black halo on all four sides
+   *                                    of every letter. This is what your eye
+   *                                    actually uses to detect letter edges
+   *                                    against ANY background. Without this
+   *                                    the text reads as fog. Do not soften.
+   *   Layer B -- WIDER SOFT WHITE GLOW. Lifts the whole word off dark/photo
+   *                                    backgrounds so the dark outline has
+   *                                    something to sit on.
+   *   Layer C -- DROP SHADOW.          Faint, grounds the text physically.
+   *
+   * Order matters in CSS text-shadow: later layers paint UNDER earlier ones,
+   * so the dark outline (Layer A) is listed FIRST and ends up on top. */
+  --popup-size: 30pt;
+  --popup-shadow:
+    /* Layer A: tight dark outline (8-way for crispness) */
+    -1px -1px 0 rgba(0,0,0,0.85),
+     1px -1px 0 rgba(0,0,0,0.85),
+    -1px  1px 0 rgba(0,0,0,0.85),
+     1px  1px 0 rgba(0,0,0,0.85),
+     0   -1px 0 rgba(0,0,0,0.85),
+     0    1px 0 rgba(0,0,0,0.85),
+    -1px  0   0 rgba(0,0,0,0.85),
+     1px  0   0 rgba(0,0,0,0.85),
+    /* Layer B: soft white glow for dark-background separation */
+    0 0 8px  rgba(255,255,255,0.75),
+    0 0 16px rgba(255,255,255,0.55),
+    0 0 28px rgba(255,255,255,0.30),
+    /* Layer C: subtle drop shadow for grounding */
+    0 2px 4px rgba(0,0,0,0.45);
+
+  /* Motion */
+  --fade-duration: 12s;  /* the slow gentle reveal — 3x slower than v1 */
+  --fade-easing:   cubic-bezier(0.22, 0.61, 0.36, 1);
+}

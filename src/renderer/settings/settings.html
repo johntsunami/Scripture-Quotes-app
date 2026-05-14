@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quotes — Settings</title>
+  <link rel="stylesheet" href="../../shared/tokens.css" />
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="app-header__brand">
+      <span class="app-header__logo" aria-hidden="true">Q</span>
+      <span class="app-header__title">Quotes</span>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab is-active" data-tab="settings" role="tab" aria-selected="true">Settings</button>
+      <button class="tab"           data-tab="quotes"   role="tab" aria-selected="false">Quotes</button>
+    </nav>
+  </header>
+
+  <main class="app-body">
+    <!-- ================== SETTINGS TAB ================== -->
+    <section class="panel is-active" id="panel-settings" role="tabpanel">
+
+      <div class="section">
+        <h2 class="section__title">Interval</h2>
+        <p class="section__hint">How often a new quote appears (measured from when the last one closed).</p>
+        <div class="radio-row" id="interval-presets">
+          <label class="chip"><input type="radio" name="interval" value="0.5"/><span>30 sec</span></label>
+          <label class="chip"><input type="radio" name="interval" value="1"/><span>1 min</span></label>
+          <label class="chip"><input type="radio" name="interval" value="5"/><span>5 min</span></label>
+          <label class="chip"><input type="radio" name="interval" value="15"/><span>15 min</span></label>
+          <label class="chip"><input type="radio" name="interval" value="30"/><span>30 min</span></label>
+          <label class="chip"><input type="radio" name="interval" value="60"/><span>1 hr</span></label>
+          <label class="chip"><input type="radio" name="interval" value="120"/><span>2 hr</span></label>
+          <label class="chip"><input type="radio" name="interval" value="180"/><span>3 hr</span></label>
+          <label class="chip"><input type="radio" name="interval" value="240"/><span>4 hr</span></label>
+          <label class="chip"><input type="radio" name="interval" value="480"/><span>8 hr</span></label>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section__title">Quiet hours</h2>
+        <p class="section__hint">No popups during this window. Set start = end to disable.</p>
+        <div class="time-row">
+          <label>From <input type="time" id="quiet-from" value="22:00"/></label>
+          <label>To   <input type="time" id="quiet-to"   value="07:00"/></label>
+          <label class="switch">
+            <input type="checkbox" id="quiet-enabled" />
+            <span>Enabled</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section__title">Startup</h2>
+        <p class="section__hint">How the app behaves when Windows starts and when you launch it.</p>
+        <div class="time-row" style="flex-direction:column; align-items:flex-start; gap:10px;">
+          <label class="switch">
+            <input type="checkbox" id="auto-start" />
+            <span>Launch automatically when Windows starts</span>
+          </label>
+          <label class="switch">
+            <input type="checkbox" id="show-on-launch" />
+            <span>Show a quote right away each time the app starts</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section__title">Position on screen</h2>
+        <p class="section__hint">Where the popup appears.</p>
+        <div class="position-grid" id="position-grid">
+          <button type="button" class="pos-btn" data-pos="top-left"     title="Top left">     <span class="pos-dot"></span></button>
+          <button type="button" class="pos-btn" data-pos="top-center"   title="Top center">   <span class="pos-dot"></span></button>
+          <button type="button" class="pos-btn" data-pos="top-right"    title="Top right">    <span class="pos-dot"></span></button>
+          <div></div>
+          <button type="button" class="pos-btn" data-pos="center"       title="Center">       <span class="pos-dot"></span></button>
+          <div></div>
+          <button type="button" class="pos-btn" data-pos="bottom-left"  title="Bottom left">  <span class="pos-dot"></span></button>
+          <button type="button" class="pos-btn" data-pos="bottom-center" title="Bottom center"><span class="pos-dot"></span></button>
+          <button type="button" class="pos-btn" data-pos="bottom-right" title="Bottom right"> <span class="pos-dot"></span></button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section__title">Appearance</h2>
+        <div class="slider-row">
+          <label class="slider">
+            <span class="slider__label">Font size <em id="font-size-val">30pt</em></span>
+            <input type="range" id="font-size" min="20" max="48" step="1" value="30" />
+          </label>
+          <label class="slider">
+            <span class="slider__label">Opacity <em id="opacity-val">100%</em></span>
+            <input type="range" id="opacity" min="60" max="100" step="5" value="100" />
+          </label>
+        </div>
+
+        <div class="slider-row">
+          <label class="slider">
+            <span class="slider__label">
+              Font color
+              <em id="font-color-val">Default (brown)</em>
+            </span>
+            <div class="color-row">
+              <input type="color" id="font-color" value="#3D342B" />
+              <button type="button" class="btn-secondary btn-secondary--mini" id="font-color-reset">Reset</button>
+            </div>
+          </label>
+          <label class="slider">
+            <span class="slider__label">
+              Reveal duration <em id="reveal-duration-val">7s</em>
+            </span>
+            <input type="range" id="reveal-duration" min="1" max="30" step="1" value="7" />
+            <span class="slider__hint">Total time from first appearance to fully visible.</span>
+          </label>
+        </div>
+
+        <div class="slider-row slider-row--single">
+          <label class="slider">
+            <span class="slider__label">Reveal style</span>
+            <div class="radio-inline">
+              <label class="chip"><input type="radio" name="reveal-mode" value="all"/><span>All at once</span></label>
+              <label class="chip"><input type="radio" name="reveal-mode" value="word"/><span>One word at a time</span></label>
+            </div>
+          </label>
+        </div>
+
+        <div class="slider-row slider-row--single" id="word-speed-row">
+          <label class="slider">
+            <span class="slider__label">
+              Word appearance speed <em id="word-speed-val">1.2s per word</em>
+            </span>
+            <input type="range" id="word-speed" min="200" max="3000" step="100" value="1200" />
+            <span class="slider__hint">How long each word takes to fade in (word-by-word mode only).</span>
+          </label>
+        </div>
+
+        <div class="preview" id="appearance-preview">
+          <span class="preview__text">Be still, and know that I am God.</span>
+          <span class="preview__source">Psalm 46:10</span>
+        </div>
+        <div class="preview-actions">
+          <button type="button" class="btn-secondary btn-secondary--mini" id="preview-replay">Replay animation</button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section__title">Decks in rotation</h2>
+        <p class="section__hint">
+          When multiple decks are enabled, quotes rotate through them one at a time
+          (round-robin). Disable a deck to pause it without deleting it.
+        </p>
+        <div class="deck-list" id="deck-list">
+          <em class="muted">Loading decks…</em>
+        </div>
+        <div class="deck-list__actions">
+          <button type="button" class="btn-secondary btn-secondary--mini" id="new-deck-btn">+ New empty deck</button>
+        </div>
+      </div>
+
+      <div class="section section--actions">
+        <button class="btn-primary" id="save-settings">Save settings</button>
+        <span class="save-feedback" id="save-feedback"></span>
+      </div>
+    </section>
+
+    <!-- ================== QUOTES TAB ================== -->
+    <section class="panel" id="panel-quotes" role="tabpanel">
+
+      <div class="stats-bar" id="stats-bar">
+        <span class="stat"><strong id="stat-total">0</strong> quotes</span>
+        <span class="stat-sep">·</span>
+        <span class="stat"><strong id="stat-favorites">0</strong> favorites</span>
+        <span class="stat-sep">·</span>
+        <span class="stat"><strong id="stat-decks">0</strong> decks</span>
+        <span class="stat-sep">·</span>
+        <span class="stat"><strong id="stat-deleted">0</strong> deleted</span>
+        <span class="stat-sep">·</span>
+        <span class="stat" title="Quotes shown in the current rotation across all decks. Persists across app restarts."><strong id="stat-seen">0</strong> seen this rotation</span>
+      </div>
+
+      <div class="section">
+        <h2 class="section__title">Add quotes</h2>
+        <p class="section__hint">
+          Use an AI like Claude or ChatGPT to generate batches of quotes, then paste the result here.
+        </p>
+
+        <!-- Step 1 -->
+        <div class="add-step">
+          <div class="add-step__num">1</div>
+          <div class="add-step__body">
+            <h3 class="add-step__title">Tell the AI what kind of quotes you want</h3>
+            <div class="prompt-builder">
+              <span>Generate</span>
+              <input type="number" id="prompt-count" value="100" min="1" max="2000" class="prompt-input prompt-input--num" />
+              <span>quotes about</span>
+              <input type="text" id="prompt-topic" value="positivity and motivation" class="prompt-input prompt-input--text" placeholder="e.g. financial wisdom, biblical comfort, NCLEX nursing facts" />
+            </div>
+            <p class="add-step__hint">Examples: "biblical comfort", "stoic philosophy", "financial education", "discipline and perseverance"</p>
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="add-step">
+          <div class="add-step__num">2</div>
+          <div class="add-step__body">
+            <h3 class="add-step__title">Copy this prompt and send it to your AI</h3>
+            <div class="prompt-preview" id="prompt-preview"></div>
+            <button type="button" class="btn-primary" id="copy-prompt">
+              <span id="copy-prompt-label">Copy prompt</span>
+            </button>
+            <p class="add-step__hint">
+              Paste the prompt into a fresh conversation with Claude (claude.ai), ChatGPT, or any AI chat.
+              The AI will respond with a long block of text — that's your quotes.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="add-step">
+          <div class="add-step__num">3</div>
+          <div class="add-step__body">
+            <h3 class="add-step__title">Paste the AI's response here</h3>
+            <textarea id="import-textarea" class="import-textarea"
+                      placeholder="Paste the AI's response here. It should start with [ and end with ]."
+                      spellcheck="false"></textarea>
+            <div class="import-actions">
+              <label class="import-target">
+                Save to:
+                <select id="import-deck" class="select">
+                  <option value="__new__">+ New deck (named from topic)</option>
+                </select>
+              </label>
+              <button class="btn-primary" id="import-btn">Import quotes</button>
+              <span class="import-feedback" id="import-feedback"></span>
+            </div>
+            <p class="add-step__hint">
+              Duplicates are skipped automatically — safe to re-import the same batch if you're not sure it went through.
+              You can also drag a saved <code>.json</code> file directly onto the box above.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section__title">Library</h2>
+
+        <div class="filter-row">
+          <input type="search" id="search" placeholder="Search text or source…" class="search-input" />
+          <select id="filter-deck" class="select">
+            <option value="__all__">All decks</option>
+          </select>
+          <label class="switch">
+            <input type="checkbox" id="filter-favorites" />
+            <span>Favorites only</span>
+          </label>
+        </div>
+
+        <!-- Inline add-quote form: collapsed by default, expands when clicked -->
+        <details class="add-quote-form" id="add-quote-form">
+          <summary>+ Add a single quote</summary>
+          <div class="add-quote-form__body">
+            <input type="text" id="add-quote-text" class="search-input" placeholder="Quote text" maxlength="500" />
+            <input type="text" id="add-quote-source" class="search-input" placeholder="Source (optional)" />
+            <select id="add-quote-deck" class="select"></select>
+            <button type="button" class="btn-primary" id="add-quote-btn">Add</button>
+          </div>
+          <span class="add-quote-feedback" id="add-quote-feedback"></span>
+        </details>
+
+        <!-- Bulk-select toolbar: hidden until at least one row selected -->
+        <div class="bulk-bar" id="bulk-bar" hidden>
+          <span class="bulk-bar__count"><strong id="bulk-count">0</strong> selected</span>
+          <button type="button" class="btn-secondary btn-secondary--mini" id="bulk-fav-btn">★ Favorite all</button>
+          <button type="button" class="btn-secondary btn-secondary--mini" id="bulk-unfav-btn">☆ Unfavorite all</button>
+          <button type="button" class="btn-secondary btn-secondary--mini btn-secondary--danger" id="bulk-delete-btn">🗑 Delete all</button>
+          <button type="button" class="btn-secondary btn-secondary--mini" id="bulk-clear-btn">Cancel</button>
+        </div>
+
+        <div class="quote-list" id="quote-list">
+          <em class="muted">Loading quotes…</em>
+        </div>
+
+        <p class="add-step__hint" style="margin-top:8px;">
+          Tip: <strong>click</strong> a row to select it. <strong>Shift+click</strong> to select a range.
+          Selected rows can be bulk-favorited or bulk-deleted.
+        </p>
+      </div>
+
+      <div class="section section--actions">
+        <button class="btn-secondary" id="restore-deleted">Restore deleted quotes</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="settings.js"></script>
+</body>
+</html>
