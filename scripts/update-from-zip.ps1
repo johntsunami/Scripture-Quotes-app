@@ -120,25 +120,21 @@ if (Test-Path '.\.git') {
     exit 0
 }
 
-# --- Step 6: Offer to push ---
+# --- Step 6: Always push to GitHub ---
 $status = git status --porcelain
 if ([string]::IsNullOrWhiteSpace($status)) {
     Write-Host "  No changes to commit." -ForegroundColor Green
 } else {
     Write-Host ""
-    $push = Read-Host "Commit and push to GitHub? (Y/n)"
-    if ($push -ne 'n' -and $push -ne 'N') {
-        powershell -ExecutionPolicy Bypass -File .\scripts\push-to-github.ps1
-    }
+    Write-Host "Pushing to GitHub..." -ForegroundColor Cyan
+    powershell -ExecutionPolicy Bypass -File .\scripts\push-to-github.ps1
 }
 
-# --- Step 7: Offer to start the app ---
+# --- Step 7: Always start the app ---
 Write-Host ""
-$run = Read-Host "Start the app now? (Y/n)"
-if ($run -ne 'n' -and $run -ne 'N') {
-    Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', 'npm', 'start' -WorkingDirectory $projectRoot
-    Write-Host "  Launched. Look for the tray icon in your taskbar." -ForegroundColor Green
-}
+Write-Host "Starting the app..." -ForegroundColor Cyan
+Start-Process -FilePath 'cmd.exe' -ArgumentList '/c', 'npm', 'start' -WorkingDirectory $projectRoot
+Write-Host "  Launched. Look for the tray icon in your taskbar." -ForegroundColor Green
 
 Write-Host ""
 Write-Host "Update complete." -ForegroundColor Green
