@@ -5,6 +5,28 @@ All notable changes to this project are documented here.
 The format is loosely based on [Keep a Changelog](https://keepachangelog.com/),
 and the project follows semantic versioning where practical.
 
+## [0.8.1] -- 2026-05-13
+
+### Fixed
+- **`scripts/update-from-zip.ps1` was failing to parse in PowerShell 5.1**
+  due to em-dash characters in comments. PowerShell 5.1 defaults to
+  Windows-1252 encoding which misreads UTF-8 multi-byte sequences, causing
+  the parser to throw "missing terminator" errors at unrelated lines.
+  Same root cause as the original setup.ps1 issue. Fix: stripped all
+  non-ASCII typography (em-dashes, curly quotes, ellipses) from
+  `update-from-zip.ps1` and `push-to-github.ps1`, and saved both with
+  UTF-8 BOM to match the proven `setup.ps1` encoding pattern.
+
+## [0.8.0] -- 2026-05-13
+
+### Changed
+- **Accessibility: minimum font size raised to 14px** across the settings UI,
+  and all sizes proportionally rescaled. Previously some helper text was as
+  small as 10–11px, below WCAG's 14px minimum for body content. New scale:
+  body 15px, hints 14px, sub-headings 18–20px, section titles 22–24px, page
+  title 28px, tiny pills 13px. Popup action buttons (Dismiss / Save / Delete)
+  bumped from 13px to 15px for the same reason.
+
 ## [0.7.2] — 2026-05-13
 
 ### Added

@@ -1,4 +1,4 @@
-# push-to-github.ps1
+﻿# push-to-github.ps1
 # ===================================================================
 # After extracting a new zip from Claude, run this script to commit
 # and push the changes to GitHub.

@@ -1,4 +1,4 @@
-# update-from-zip.ps1
+﻿# update-from-zip.ps1
 # ===================================================================
 # Smart update workflow: takes a fresh quotes.zip from Downloads and
 # applies it to the project folder WITHOUT destroying .git/ or data/.
@@ -38,7 +38,7 @@ if (-not (Test-Path $projectRoot)) {
 }
 
 Write-Host ""
-Write-Host "Scripture Quotes — update from zip" -ForegroundColor Cyan
+Write-Host "Scripture Quotes -- update from zip" -ForegroundColor Cyan
 Write-Host "===================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -83,7 +83,7 @@ $excludeDirs = @('.git', 'data', 'node_modules')
 $robocopyArgs = @(
     $extractedRoot,
     $projectRoot,
-    '/MIR',                                 # mirror — delete files in dest that aren't in src
+    '/MIR',                                 # mirror -- delete files in dest that aren't in src
     '/XD'                                   # exclude these directories
 ) + ($excludeDirs | ForEach-Object { Join-Path $projectRoot $_ }) + @(
     '/NFL', '/NDL', '/NJH', '/NJS', '/NC', '/NS', '/NP'  # quiet output
@@ -91,7 +91,7 @@ $robocopyArgs = @(
 
 robocopy @robocopyArgs | Out-Null
 
-# robocopy uses non-zero exit codes for SUCCESS — codes 0-7 are fine, 8+ are errors
+# robocopy uses non-zero exit codes for SUCCESS -- codes 0-7 are fine, 8+ are errors
 if ($LASTEXITCODE -gt 7) {
     Write-Host "  robocopy reported errors (exit $LASTEXITCODE)" -ForegroundColor Red
     Remove-Item $tempExtract -Recurse -Force
@@ -114,7 +114,7 @@ Write-Host "Step 5: Changes in Git working tree..." -ForegroundColor Yellow
 if (Test-Path '.\.git') {
     git status --short
 } else {
-    Write-Host "  No .git folder found — skipping Git steps." -ForegroundColor Gray
+    Write-Host "  No .git folder found -- skipping Git steps." -ForegroundColor Gray
     Write-Host ""
     Write-Host "Update complete. Run 'npm start' to launch the app." -ForegroundColor Green
     exit 0

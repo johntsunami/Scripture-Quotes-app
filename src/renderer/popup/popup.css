@@ -123,7 +123,7 @@ html, body {
 
 .btn {
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--text-brown);
