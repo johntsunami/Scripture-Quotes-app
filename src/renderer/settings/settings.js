@@ -220,7 +220,7 @@ async function loadSettings() {
   if (!ipc) return;
   const s = await ipc.invoke('settings:load');
   // interval -- match against the preset list; if no match, default to 30min
-  const presets = ['0.5','1','5','15','30','60','120','180','240','480'];
+  const presets = ['0.1667','0.5','1','5','15','30','60','120','180','240','480'];
   const intervalKey = presets.includes(String(s.intervalMin))
     ? String(s.intervalMin) : '30';
   const intervalEl = document.querySelector(`input[name="interval"][value="${intervalKey}"]`);

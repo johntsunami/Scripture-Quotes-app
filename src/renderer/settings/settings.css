@@ -115,6 +115,9 @@ html, body {
   color: var(--text-brown);
   transition: background 0.15s ease, border-color 0.15s ease;
 }
+/* Interval preset chips are smaller — there are many of them and they */
+/* function as compact radio buttons, not full text labels. */
+#interval-presets .chip { font-size: 14px; padding: 7px 14px; }
 .chip input { display: none; }
 .chip:hover { border-color: rgba(184, 134, 11, 0.5); }
 .chip:has(input:checked) {
